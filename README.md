@@ -1,70 +1,203 @@
-# Getting Started with Create React App
+## TaskList-2.0
+TaskList-2.0 is a fullstack JavaScript application that helps users manage their tasks efficiently. It features user authentication, task creation, task management, and notifications, all backed by a JSON Server.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Table of Contents
+1. Project Structure
+2. Setup Instructions
+3. Running the Application
+4. Features
+5. Components
+6. Services
+7. Styling
+8. Contributing
+9. License
 
-## Available Scripts
+## Project Structure
 
-In the project directory, you can run:
+```
+src/
+├── assets/
+├── components/
+│   ├── Authentication/
+│   │   ├── Login.jsx
+│   │   ├── Signup.jsx
+│   │   └── Profile.jsx
+│   ├── Task/
+│   │   ├── TaskForm.jsx
+│   │   ├── TaskList.jsx
+│   │   ├── TaskItem.jsx
+│   │   └── TaskDetail.jsx
+│   ├── Notification.jsx
+│   ├── SearchBar.jsx
+│   ├── FilterOptions.jsx
+│   ├── SortOptions.jsx
+│   └── DragAndDrop.jsx
+├── pages/
+│   ├── HomePage.jsx
+│   ├── TaskPage.jsx
+│   └── ProfilePage.jsx
+├── services/
+│   ├── authService.js
+│   ├── taskService.js
+│   └── notificationService.js
+├── utils/
+├── hooks/
+├── App.css
+├── App.jsx
+└── index.js
 
-### `npm start`
+```
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Setup Instructions
+1. Clone the repository:
+```
+git clone https://github.com/yourusername/tasklist-2.0.git
+cd tasklist-2.0
+```
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+2. Install dependencies:
+```
+npm install
 
-### `npm test`
+```
+3. Set up JSON Server:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Create a db.json file in the root directory with the following content:
 
-### `npm run build`
+```
+{
+  "tasks": [],
+  "users": [],
+  "notifications": []
+}
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+4. Add a script to package.json to start JSON Server:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```
 
-### `npm run eject`
+"scripts": {
+  "start": "react-scripts start",
+  "server": "json-server --watch db.json --port 5000"
+}
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Running the Application
+1. Start the React development server:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+```
+npm start
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+```
 
-## Learn More
+2. Start the JSON Server in a separate terminal:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```
+npm run server
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+```
 
-### Code Splitting
+## Features
+ 1. User Authentication:
+  - Login and signup functionality
+  - Profile management
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+ 2. Task Management:
+   - Create, view, and manage tasks
+   - Task details and status updates
 
-### Analyzing the Bundle Size
+ 3. Notifications:
+  - Notification service for task updates
+  
+ 4. Additional Features:
+  - Search, filter, and sort tasks
+  - Drag and drop tasks for easy management
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## Components
+1. Authentication
+Login.jsx: User login form
+Signup.jsx: User signup form
+Profile.jsx: User profile display
 
-### Making a Progressive Web App
+2. Task
+TaskForm.jsx: Form for adding new tasks
+TaskList.jsx: List of tasks
+TaskItem.jsx: Individual task item
+TaskDetail.jsx: Detailed view of a task
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+3. Miscellaneous
+Notification.jsx: Notification display
+SearchBar.jsx: Search bar for tasks
+FilterOptions.jsx: Task filter options
+SortOptions.jsx: Task sorting options
+DragAndDrop.jsx: Drag and drop functionality
+P
+4. Pages
+HomePage.jsx: Home page displaying task list and form
+TaskPage.jsx: Page for detailed task view
+ProfilePage.jsx: User profile page
 
-### Advanced Configuration
+5. Services
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+1. authService.js
+Handles user authentication, including login and signup:
 
-### Deployment
+```
+import axios from 'axios';
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+const API_URL = 'http://localhost:5000/users';
 
-### `npm run build` fails to minify
+export const login = async (email, password) => {
+  const response = await axios.get(API_URL, { params: { email, password } });
+  return response.data.length ? response.data[0] : null;
+};
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+export const signup = async (user) => {
+  const response = await axios.post(API_URL, user);
+  return response.data;
+};
+```
+
+2. taskService.js
+Manages tasks, including fetching, adding, and updating tasks:
+
+```
+import axios from 'axios';
+
+const API_URL = 'http://localhost:5000/tasks';
+
+export const getTasks = async () => {
+  const response = await axios.get(API_URL);
+  return response.data;
+};
+
+export const addTask = async (task) => {
+  const response = await axios.post(API_URL, task);
+  return response.data;
+};
+
+```
+
+3. notificationService.js
+Handles notifications, including fetching notifications:
+
+```
+import axios from 'axios';
+
+const API_URL = 'http://localhost:5000/notifications';
+
+export const getNotifications = async () => {
+  const response = await axios.get(API_URL);
+  return response.data;
+};
+
+```
+
+## Contributing
+Contributions are welcome! Please fork the repository and submit a pull request for any improvements or bug fixes.
+
+## License
+This project is licensed under the MIT License. See the LICENSE file for details.
+
